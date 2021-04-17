@@ -6,7 +6,7 @@ pipeline{
     environment
     {
         VERSION="$BUILD_NUMBER"
-        IMAGE= "$registry + $BUILD_NUMBER"
+        IMAGE= "$registry:$BUILD_NUMBER"
         registry='sachiket/flightapi'
         DOCCRED='dockerhub_id'
 
