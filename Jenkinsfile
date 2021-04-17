@@ -6,8 +6,7 @@ pipeline{
     environment
     {
         VERSION="$BUILD_NUMBER"
-        PROJECT='flight-search'
-        IMAGE= "$PROJECT:latest"
+        IMAGE= "$registry + $BUILD_NUMBER"
         registry='sachiket/flightapi'
         DOCCRED='dockerhub_id'
 
@@ -31,7 +30,7 @@ pipeline{
         stage('Image Build'){
             steps{
                 script{
-                    docker.build registry + "$BUILD_NUMBER"
+                    docker.build('$IMAGE')
                 }
             }
         }
@@ -39,7 +38,7 @@ pipeline{
             steps{
                 script{
                     docker.withRegistry('', DOCCRED){
-                        dockerImage.push()
+                        docker.image(IMAGE).push()
                     }
                 }
             }  
