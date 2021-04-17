@@ -8,7 +8,7 @@ pipeline{
         VERSION="$BUILD_NUMBER"
         PROJECT='flight-search'
         IMAGE= "$PROJECT:latest"
-        ECRURL='https://hub.docker.com/repository/docker/sachiket/flightapi'
+        registry='sachiket/flightapi'
         DOCCRED='dockerhub_id'
 
     }
@@ -31,15 +31,15 @@ pipeline{
         stage('Image Build'){
             steps{
                 script{
-                    docker.build('$IMAGE')
+                    docker.build registry + "$BUILD_NUMBER"
                 }
             }
         }
         stage('Push Image'){
             steps{
                 script{
-                    docker.withRegistry(ECRURL, DOCCRED){
-                        docker.image(IMAGE).push()
+                    docker.withRegistry('', DOCCRED){
+                        dockerImage.push()
                     }
                 }
             }  
